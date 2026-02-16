@@ -4,60 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Memories</div>
-        <div class="music-controls">
-            <button id="lyricsBtn">Lyrics</button>
-            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">Happy Birthday <br><span>Partner</span></h1>
-            <p class="fade-in-delay">Wishing you the most magical year ahead.</p>
-            <div class="scroll-indicator">
-                <span>Scroll Down</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
-    </section>
-
-    <section class="memories" id="memories">
-        <h2>Memories</h2>
-        <div class="gallery">
-            <div class="memory-card" data-aos="fade-up">
-                <img src="https://via.placeholder.com/300x400" alt="Memory 1">
-                <p>The day we met...</p>
-            </div>
-            <div class="memory-card" data-aos="fade-up">
-                <img src="https://via.placeholder.com/300x400" alt="Memory 2">
-                <p>That crazy trip...</p>
-            </div>
-            <div class="memory-card" data-aos="fade-up">
-                <img src="https://via.placeholder.com/300x400" alt="Memory 3">
-                <p>Our favorite spot...</p>
-            </div>
-        </div>
-    </section>
-
-    <div id="noteModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>A Special Note</h3>
-            <p>You make the world a better place just by being in it...</p>
+    <div id="intro-overlay">
+        <div class="intro-content">
+            <h1>Tap to Begin</h1>
+            <p>Turn up the volume 🔊</p>
+            <button id="start-btn">Enter</button>
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="your-song.mp3" type="audio/mpeg">
+    <div id="main-content" style="display: none;">
+        
+        <nav class="music-bar">
+            <div class="logo">Memories</div>
+            <div class="controls">
+                <span id="replay-btn">Replay</span>
+                <span id="lyrics-btn">Lyrics</span>
+                <span id="play-pause-btn">Pause Music</span>
+            </div>
+        </nav>
+
+        <div id="lyrics-overlay">
+            <button class="close-lyrics">×</button>
+            <div class="lyrics-text">
+                <h3>Song Lyrics</h3>
+                <p>
+                    (Paste the lyrics of your song here)<br>
+                    Happy birthday to you...<br>
+                    May all your dreams come true...<br>
+                    ...
+                </p>
+            </div>
+        </div>
+
+        <header class="hero">
+            <div class="hero-text" data-aos="fade-in" data-aos-duration="2000">
+                <h3>Happy Birthday</h3>
+                <h1>ABHI</h1> <p>Wishing you the most magical year ahead.</p>
+            </div>
+            <div class="scroll-down">
+                <p>Scroll Down</p>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </header>
+
+        <section class="gallery-section">
+            <h2 data-aos="fade-up">Memories</h2>
+            <div class="gallery-grid">
+                <div class="photo-card" data-aos="fade-up">
+                    <img src="your-photo-1.jpg" alt="Memory">
+                    <p class="caption">The beginning...</p>
+                </div>
+                <div class="photo-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="your-photo-2.jpg" alt="Memory">
+                    <p class="caption">Crazy times...</p>
+                </div>
+                <div class="photo-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="your-photo-3.jpg" alt="Memory">
+                    <p class="caption">Best friends...</p>
+                </div>
+                 </div>
+        </section>
+
+        <section class="final-msg" data-aos="zoom-in">
+            <h2>Once again, Happy Birthday!</h2>
+            <p>Keep Smiling :)</p>
+        </section>
+
+        <footer>
+            <p>Made with ❤️ for You</p>
+        </footer>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
     </audio>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
