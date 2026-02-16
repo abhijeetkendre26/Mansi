@@ -1,38 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const music = document.getElementById('bgMusic');
-    const playBtn = document.getElementById('playPauseBtn');
-    const icon = playBtn.querySelector('i');
-    
-    // Play/Pause Music
-    playBtn.addEventListener('click', () => {
-        if (music.paused) {
-            music.play();
-            icon.classList.remove('fa-play');
-            icon.classList.add('fa-pause');
-        } else {
-            music.pause();
-            icon.classList.add('fa-play');
-            icon.classList.remove('fa-pause');
-        }
-    });
+// Initialize Animations
+AOS.init();
 
-    // Simple Scroll Animation Observer
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = 1;
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    });
+const music = document.getElementById('bg-music');
+const introOverlay = document.getElementById('intro-overlay');
+const mainContent = document.getElementById('main-content');
+const startBtn = document.getElementById('start-btn');
 
-    // Target memory cards for animation
-    const cards = document.querySelectorAll('.memory-card');
-    cards.forEach(card => {
-        card.style.opacity = 0;
-        card.style.transform = 'translateY(50px)';
-        card.style.transition = 'all 0.6s ease-out';
-        observer.observe(card);
-    });
+// Music Controls
+const playPauseBtn = document.getElementById('play-pause-btn');
+const lyricsBtn = document.getElementById('lyrics-btn');
+const lyricsOverlay = document.getElementById('lyrics-overlay');
+const closeLyrics = document.querySelector('.close-lyrics');
+const replayBtn = document.getElementById('replay-btn');
+
+// 1. Handle "Enter" Click
+startBtn.addEventListener('click', () => {
+    introOverlay.style.opacity = 0;
+    setTimeout(() => {
+        introOverlay.style.display = 'none';
+        mainContent.style.display = 'block';
+        music.play(); // Start music
+    }, 500);
 });
 
+// 2. Play/Pause Logic
+playPauseBtn.addEventListener('click', () => {
+    if (music.paused) {
+        music.play();
+        playPauseBtn.innerText = "Pause Music";
+    } else {
+        music.pause();
+        playPauseBtn.innerText = "Play Music";
+    }
+});
+
+// 3. Replay Logic
+replayBtn.addEventListener('click', () => {
+    music.currentTime = 0;
+    music.play();
+});
+
+// 4. Lyrics Logic
+lyricsBtn.addEventListener('click', () => {
+    lyricsOverlay.style.display = 'flex';
+});
+
+closeLyrics.addEventListener('click', () => {
+    lyricsOverlay.style.display = 'none';
+});
