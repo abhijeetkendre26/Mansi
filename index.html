@@ -6,203 +6,139 @@
     <title>Happy Birthday Mansi!</title>
     <style>
         :root {
-            --cake-color: #ff6b6b;
-            --bg-color: #fff5f5;
+            --accent: #ff4757;
+            --gold: #ffd700;
         }
+        body, html { margin: 0; padding: 0; font-family: 'Arial', sans-serif; background: #fff; overflow-x: hidden; }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: var(--bg-color);
-            scroll-behavior: smooth;
-        }
-
-        /* --- 1st Page: Loading Screen --- */
+        /* --- STAGE 1: LOADING --- */
         #loader {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            background: radial-gradient(circle, #ffe3e3, #ffb1b1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            transition: transform 0.8s ease-in-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle, #ff9a9e, #fecfef);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; transition: 1s ease-in-out;
         }
+        .loading-cake { font-size: 100px; animation: bounce 1.5s infinite; }
+        .progress-container { width: 250px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 10px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: var(--gold); transition: width 3s linear; }
 
-        .emoji-cake { font-size: 80px; animation: pulse 1.5s infinite; }
-        .loading-text { margin: 20px; font-weight: bold; color: #d63384; font-size: 1.2rem; }
-        
-        .load-bar {
-            width: 250px;
-            height: 12px;
-            background: #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .load-progress {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(to right, #ff4d4d, #f9ca24);
-            transition: width 3s ease;
-        }
-
-        /* --- 2nd Page: Decoration Theme --- */
-        #main-content { display: none; text-align: center; }
-
+        /* --- STAGE 2: HERO --- */
+        #content { display: none; }
         .hero {
-            height: 100vh;
-            background: url('https://img.freepik.com/free-vector/birthday-frame-with-balloons-confetti_23-2148473215.jpg') center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: url('https://img.freepik.com/free-vector/birthday-decoration-with-balloons-flags_23-2147614040.jpg') center/cover;
+            text-align: center;
+        }
+        .hero h1 { font-size: 4rem; color: #d63384; text-shadow: 0 0 10px #fff; animation: zoomIn 1s ease; }
+        .party-icon { font-size: 60px; animation: rotate 3s infinite linear; }
+
+        /* --- STAGE 3: GALLERY --- */
+        .gallery { padding: 80px 20px; background: #fff5f5; text-align: center; }
+        .photo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; max-width: 1100px; margin: 40px auto;
+        }
+        .photo-grid img { 
+            width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            transition: 0.4s; filter: grayscale(30%);
+        }
+        .photo-grid img:hover { transform: translateY(-10px) scale(1.05); filter: grayscale(0%); }
+
+        /* --- STAGE 4: INTERACTIVE POPUP --- */
+        #popup {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 85%; max-width: 500px; background: #fff; padding: 40px;
+            border-radius: 25px; box-shadow: 0 0 100px rgba(0,0,0,0.4); z-index: 1001;
+        }
+        .typing { font-size: 1.2rem; font-weight: bold; border-right: 3px solid var(--accent); white-space: pre-wrap; display: inline-block; }
+        
+        .btn-open { 
+            padding: 15px 40px; background: var(--accent); color: #fff; 
+            border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
+            margin: 40px 0; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            color: #b71540;
-            text-shadow: 2px 2px 10px white;
-            animation: bounceIn 2s;
-        }
-
-        .celebration-anim { font-size: 50px; animation: rotate 2s infinite linear; }
-
-        /* --- Photo Gallery --- */
-        .gallery-container { padding: 50px 20px; background: white; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .grid img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-        .grid img:hover { transform: scale(1.03); }
-
-        /* --- Popup & Message --- */
-        #msg-popup {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 450px;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 100px rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-
-        .typing { border-right: 2px solid; white-space: pre-wrap; display: inline-block; }
-
-        button {
-            padding: 12px 25px;
-            background: #ff4757;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-top: 20px;
-        }
-
-        /* --- Animations --- */
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        /* Animations */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
         @keyframes rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-        @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes zoomIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="loader">
-        <div class="emoji-cake">🎂</div>
-        <div class="loading-text">Loading your birthday surprise...</div>
-        <div class="load-bar"><div class="load-progress" id="progress"></div></div>
+        <div class="loading-cake">🎂</div>
+        <div style="color:#fff; font-weight:bold; margin-top:10px;">Loading your birthday surprise...</div>
+        <div class="progress-container"><div class="progress-fill" id="bar"></div></div>
     </div>
 
-    <div id="main-content">
+    <div id="content">
         <div class="hero">
             <h1>Happy Birthday Mansi 🎂</h1>
-            <div class="celebration-anim">🎉</div>
-            <p style="font-size: 1.2rem; background: rgba(255,255,255,0.6); padding: 10px;">Keep scrolling for your surprise!</p>
+            <p style="font-size:1.5rem; color:#555;">May your day be as bright as your smile!</p>
+            <div class="party-icon">🎉</div>
         </div>
 
-        <div class="gallery-container">
-            <h2>Memories Together</h2>
-            <div class="grid">
-                <img src="https://via.placeholder.com/400x500?text=Photo+1" alt="Mansi 1">
-                <img src="https://via.placeholder.com/400x500?text=Photo+2" alt="Mansi 2">
-                <img src="https://via.placeholder.com/400x500?text=Photo+3" alt="Mansi 3">
-                <img src="https://via.placeholder.com/400x500?text=Photo+4" alt="Mansi 4">
-                <img src="https://via.placeholder.com/400x500?text=Photo+5" alt="Mansi 5">
-                <img src="https://via.placeholder.com/400x500?text=Photo+6" alt="Mansi 6">
+        <div class="gallery">
+            <h2>Special Memories ✨</h2>
+            <div class="photo-grid">
+                <img src="https://via.placeholder.com/400x500?text=Photo+1" alt="Memory 1">
+                <img src="https://via.placeholder.com/400x500?text=Photo+2" alt="Memory 2">
+                <img src="https://via.placeholder.com/400x500?text=Photo+3" alt="Memory 3">
+                <img src="https://via.placeholder.com/400x500?text=Photo+4" alt="Memory 4">
+                <img src="https://via.placeholder.com/400x500?text=Photo+5" alt="Memory 5">
+                <img src="https://via.placeholder.com/400x500?text=Photo+6" alt="Memory 6">
             </div>
-
-            <button onclick="showPopup()">Click to Open Special Message ✉️</button>
+            
+            <button class="btn-open" onclick="openMsg()">Open Special Message ✉️</button>
         </div>
     </div>
 
-    <div id="msg-popup">
-        <div id="typing-container" class="typing" style="font-weight: bold; color: #333;"></div>
-        <p style="color: #666; margin-top: 15px;">— From your neighbor 🏠</p>
-        <hr>
-        <p>Send a response:</p>
-        <textarea id="resp" style="width:100%; border:1px solid #ddd; border-radius:5px;" rows="3"></textarea>
-        <button onclick="sendResponse()" style="background: #0088cc;">Send to Telegram</button>
+    <div id="popup">
+        <div id="typing-box" class="typing"></div>
+        <p style="margin-top:20px; font-style:italic;">— From your neighbor 🏠</p>
+        <textarea id="reply" placeholder="Write a reply to send on Telegram..." style="width:100%; height:80px; margin-top:10px; border-radius:10px; padding:10px; border:1px solid #ddd;"></textarea>
+        <button onclick="send()" style="background:#0088cc; width:100%; margin-top:15px; border-radius:10px; padding:12px; color:white; border:none; cursor:pointer;">Send to Telegram</button>
     </div>
 
     <script>
-        // Start Loading Logic
-        window.addEventListener('DOMContentLoaded', () => {
-            const bar = document.getElementById('progress');
-            bar.style.width = '100%';
-
+        // Start Loading
+        window.onload = () => {
+            document.getElementById('bar').style.width = '100%';
             setTimeout(() => {
-                document.getElementById('loader').style.transform = 'translateY(-100%)';
-                document.getElementById('main-content').style.display = 'block';
-            }, 3500);
-        });
+                document.getElementById('loader').style.top = '-100vh';
+                document.getElementById('content').style.display = 'block';
+            }, 3200);
+        };
 
-        // Typing Effect Logic
-        const text = "Hey Mansi,\n1st of all Happy Birthday! You are a wonderful person and a great neighbor. I hope this special day brings you as much joy as you bring to everyone around you. Have a blast! 🥳✨";
-        let charIndex = 0;
+        // Typing Message
+        const msg = "Hey Mansi,\n1st of all Happy Birthday! 🎂\nYou are an amazing neighbor and a wonderful soul. I hope this year brings you infinite success and happiness. Keep shining! ✨";
+        let idx = 0;
 
-        function showPopup() {
-            document.getElementById('msg-popup').style.display = 'block';
-            typeWriter();
+        function openMsg() {
+            document.getElementById('popup').style.display = 'block';
+            type();
         }
 
-        function typeWriter() {
-            if (charIndex < text.length) {
-                document.getElementById("typing-container").innerHTML += text.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 50);
+        function type() {
+            if (idx < msg.length) {
+                document.getElementById('typing-box').innerHTML += msg.charAt(idx);
+                idx++;
+                setTimeout(type, 50);
             }
         }
 
-        // Telegram Send Logic
-        function sendResponse() {
-            const botToken = "8313146819:AAHW8hG85mxoRr1lR5uVwd__x5GasxBCuqk";
-            const chatId = "7893857792";
-            const userMsg = document.getElementById('resp').value;
-            const finalTxt = `🎁 Mansi's Birthday Reply:\n"${userMsg}"`;
+        // Telegram Send
+        function send() {
+            const token = "8313146819:AAHW8hG85mxoRr1lR5uVwd__x5GasxBCuqk";
+            const chat = "7893857792";
+            const userReply = document.getElementById('reply').value;
+            const text = `🎉 Mansi's Birthday Response:\n\n"${userReply}"`;
 
-            const apiURL = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(finalTxt)}`;
-
-            fetch(apiURL).then(res => {
-                if(res.ok) {
-                    alert("Response sent! Happy Birthday again!");
-                    document.getElementById('msg-popup').style.display = 'none';
-                }
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`)
+            .then(() => {
+                alert("Message Sent! Happy Birthday!");
+                document.getElementById('popup').style.display = 'none';
             });
         }
     </script>
