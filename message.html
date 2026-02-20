@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unwrap Your Surprise</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body class="page-2-body">
+
+    <div class="confetti-container" id="confetti"></div>
+
+    <div class="gift-wrapper" id="gift-section">
+        <div class="spotlight"></div>
+        <div class="gift-box" onclick="openGift()">
+            <div class="gift-lid"></div>
+            <div class="gift-ribbon"></div>
+        </div>
+        <p class="instruction">Tap the box to unwrap...</p>
+    </div>
+
+    <div class="final-message hidden" id="main-message">
+        <div class="message-card">
+            <h2 class="letter-head">To my favorite person,</h2>
+            <p class="letter-body">
+                I wanted to do something a bit different this year because "normal" just doesn't 
+                fit someone as incredible as you. You make the world a lot brighter just by being in it.
+            </p>
+            <p class="letter-body">
+                I hope your day is filled with as much joy as you give to everyone around you. 
+                Happy Birthday! 🎂✨
+            </p>
+            <div class="signature">With love, Your Neighbor</div>
+            
+            <a href="gallery.html" class="next-step-btn">See our moments →</a>
+        </div>
+    </div>
+
+    <script>
+        function openGift() {
+            const gift = document.getElementById('gift-section');
+            const message = document.getElementById('main-message');
+            
+            // Trigger confetti effect
+            createConfetti();
+            
+            // Animate the gift disappearing
+            gift.style.transform = "scale(0) rotate(360deg)";
+            gift.style.opacity = "0";
+            
+            setTimeout(() => {
+                gift.classList.add('hidden');
+                message.classList.remove('hidden');
+                message.classList.add('fade-in-up');
+            }, 600);
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#ff7675', '#fdcb6e', '#55efc4', '#a29bfe', '#fab1a0'];
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(piece);
+            }
+        }
+    </script>
+</body>
+</html>
