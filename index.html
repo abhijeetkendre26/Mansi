@@ -3,89 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>A Message for You</title>
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+            --text: #ffffff;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b33 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Dashboard Style */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 350px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .glass-card:active { transform: scale(0.95); }
+
+        /* Birthday Page */
+        .bday-content { text-align: center; width: 100%; }
+        
+        #cake {
+            width: 200px;
+            margin: 20px auto;
+            transition: transform 0.1s;
+        }
+
+        .candle-container {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .flame {
+            width: 15px; height: 20px;
+            background: radial-gradient(#fff, #ffa500);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Memories Grid */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .memories-grid img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* Form */
+        textarea {
+            width: 90%;
+            height: 100px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: white;
+            padding: 10px;
+            margin: 15px 0;
+        }
+
+        .btn-send {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Animation classes */
+        .shake { animation: shakeAnim 0.5s ease-in-out; }
+        @keyframes shakeAnim {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="intro-overlay">
-        <div class="intro-content">
-            <h1>Tap to Begin</h1>
-            <p>Turn up the volume 🔊</p>
-            <button id="start-btn">Enter</button>
+    <section id="page1" class="screen">
+        <div class="glass-card" onclick="openMessage()">
+            <h2 style="font-weight: 300;">Your neighbor sent you a message</h2>
+            <p style="opacity: 0.6;">Tap to open</p>
         </div>
-    </div>
+    </section>
 
-    <div id="main-content" style="display: none;">
-        
-        <nav class="music-bar">
-            <div class="logo">Memories</div>
-            <div class="controls">
-                <span id="replay-btn">Replay</span>
-                <span id="lyrics-btn">Lyrics</span>
-                <span id="play-pause-btn">Pause Music</span>
+    <section id="page2" class="screen hidden">
+        <div class="bday-content">
+            <h1 style="font-family: serif;">Happy Birthday, Mansi!</h1>
+            <p>Wishing you the most magical year ahead.</p>
+
+            <div id="cake-area">
+                <div class="candle-container">
+                    <div class="flame" id="flame1"></div>
+                    <div class="flame" id="flame2"></div>
+                </div>
+                <img id="cake" src="https://cdn-icons-png.flaticon.com/512/3168/3168122.png" alt="Cake">
             </div>
-        </nav>
 
-        <div id="lyrics-overlay">
-            <button class="close-lyrics">×</button>
-            <div class="lyrics-text">
-                <h3>Song Lyrics</h3>
-                <p>
-                    (Paste the lyrics of your song here)<br>
-                    Happy birthday to you...<br>
-                    May all your dreams come true...<br>
-                    ...
-                </p>
+            <p style="font-size: 0.8rem; opacity: 0.5;">(Shake your phone to see the cake move!)</p>
+            
+            <hr style="width: 50%; border: 0.5px solid var(--border); margin: 40px auto;">
+
+            <h3>My Memories</h3>
+            <div class="memories-grid">
+                <img src="https://via.placeholder.com/150" alt="Memory 1">
+                <img src="https://via.placeholder.com/150" alt="Memory 2">
+                <img src="https://via.placeholder.com/150" alt="Memory 3">
+                <img src="https://via.placeholder.com/150" alt="Memory 4">
+            </div>
+
+            <div style="margin-top: 50px;">
+                <h3>Write a special message to Mansi</h3>
+                <p style="font-size: 0.9rem;">From your neighbor</p>
+                <textarea id="neighborMsg" placeholder="Type your message here..."></textarea>
+                <br>
+                <button class="btn-send" onclick="sendTelegram()">Send Message</button>
             </div>
         </div>
+    </section>
 
-        <header class="hero">
-            <div class="hero-text" data-aos="fade-in" data-aos-duration="2000">
-                <h3>Happy Birthday</h3>
-                <h1>ABHI</h1> <p>Wishing you the most magical year ahead.</p>
-            </div>
-            <div class="scroll-down">
-                <p>Scroll Down</p>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </header>
+    <script>
+        function openMessage() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+            window.scrollTo(0,0);
+            startBlowDetection();
+        }
 
-        <section class="gallery-section">
-            <h2 data-aos="fade-up">Memories</h2>
-            <div class="gallery-grid">
-                <div class="photo-card" data-aos="fade-up">
-                    <img src="your-photo-1.jpg" alt="Memory">
-                    <p class="caption">The beginning...</p>
-                </div>
-                <div class="photo-card" data-aos="fade-up" data-aos-delay="100">
-                    <img src="your-photo-2.jpg" alt="Memory">
-                    <p class="caption">Crazy times...</p>
-                </div>
-                <div class="photo-card" data-aos="fade-up" data-aos-delay="200">
-                    <img src="your-photo-3.jpg" alt="Memory">
-                    <p class="caption">Best friends...</p>
-                </div>
-                 </div>
-        </section>
+        // 1. SHAKE DETECTION
+        window.addEventListener('devicemotion', (event) => {
+            let acc = event.accelerationIncludingGravity;
+            if (Math.abs(acc.x) > 15 || Math.abs(acc.y) > 15) {
+                document.getElementById('cake').classList.add('shake');
+                setTimeout(() => {
+                    document.getElementById('cake').classList.remove('shake');
+                }, 500);
+            }
+        });
 
-        <section class="final-msg" data-aos="zoom-in">
-            <h2>Once again, Happy Birthday!</h2>
-            <p>Keep Smiling :)</p>
-        </section>
+        // 2. BLOW DETECTION (Simple Volume Detection)
+        function startBlowDetection() {
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                const audioContext = new AudioContext();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+                analyser.fftSize = 256;
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-        <footer>
-            <p>Made with ❤️ for You</p>
-        </footer>
-    </div>
+                function checkVolume() {
+                    analyser.getByteFrequencyData(dataArray);
+                    let values = 0;
+                    for (let i = 0; i < dataArray.length; i++) values += dataArray[i];
+                    let average = values / dataArray.length;
 
-    <audio id="bg-music" loop>
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
+                    if (average > 60) { // If user blows/loud noise
+                        document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+                    }
+                    requestAnimationFrame(checkVolume);
+                }
+                checkVolume();
+            }).catch(err => console.log("Mic access denied or not available"));
+        }
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+        // 3. TELEGRAM SENDING
+        function sendTelegram() {
+            const botToken = "YOUR_BOT_TOKEN_HERE";
+            const chatId = "YOUR_CHAT_ID_HERE";
+            const message = document.getElementById('neighborMsg').value;
+
+            if(!message) return alert("Write something first!");
+
+            const fullText = `💌 New Birthday Msg for Mansi:\n\n"${message}"\n\n- From your neighbor`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(fullText)}`;
+
+            fetch(url).then(response => {
+                if(response.ok) {
+                    alert("Message sent to the neighbor successfully! ✅");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
