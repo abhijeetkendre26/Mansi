@@ -2,146 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Mansi!</title>
-    <style>
-        :root {
-            --accent: #ff4757;
-            --gold: #ffd700;
-        }
-        body, html { margin: 0; padding: 0; font-family: 'Arial', sans-serif; background: #fff; overflow-x: hidden; }
-
-        /* --- STAGE 1: LOADING --- */
-        #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: radial-gradient(circle, #ff9a9e, #fecfef);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1000; transition: 1s ease-in-out;
-        }
-        .loading-cake { font-size: 100px; animation: bounce 1.5s infinite; }
-        .progress-container { width: 250px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 10px; margin-top: 20px; overflow: hidden; }
-        .progress-fill { width: 0%; height: 100%; background: var(--gold); transition: width 3s linear; }
-
-        /* --- STAGE 2: HERO --- */
-        #content { display: none; }
-        .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: url('https://img.freepik.com/free-vector/birthday-decoration-with-balloons-flags_23-2147614040.jpg') center/cover;
-            text-align: center;
-        }
-        .hero h1 { font-size: 4rem; color: #d63384; text-shadow: 0 0 10px #fff; animation: zoomIn 1s ease; }
-        .party-icon { font-size: 60px; animation: rotate 3s infinite linear; }
-
-        /* --- STAGE 3: GALLERY --- */
-        .gallery { padding: 80px 20px; background: #fff5f5; text-align: center; }
-        .photo-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; max-width: 1100px; margin: 40px auto;
-        }
-        .photo-grid img { 
-            width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            transition: 0.4s; filter: grayscale(30%);
-        }
-        .photo-grid img:hover { transform: translateY(-10px) scale(1.05); filter: grayscale(0%); }
-
-        /* --- STAGE 4: INTERACTIVE POPUP --- */
-        #popup {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 85%; max-width: 500px; background: #fff; padding: 40px;
-            border-radius: 25px; box-shadow: 0 0 100px rgba(0,0,0,0.4); z-index: 1001;
-        }
-        .typing { font-size: 1.2rem; font-weight: bold; border-right: 3px solid var(--accent); white-space: pre-wrap; display: inline-block; }
-        
-        .btn-open { 
-            padding: 15px 40px; background: var(--accent); color: #fff; 
-            border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
-            margin: 40px 0; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-        }
-
-        /* Animations */
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
-        @keyframes rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-        @keyframes zoomIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    </style>
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-
-    <div id="loader">
-        <div class="loading-cake">🎂</div>
-        <div style="color:#fff; font-weight:bold; margin-top:10px;">Loading your birthday surprise...</div>
-        <div class="progress-container"><div class="progress-fill" id="bar"></div></div>
-    </div>
-
-    <div id="content">
-        <div class="hero">
-            <h1>Happy Birthday Mansi 🎂</h1>
-            <p style="font-size:1.5rem; color:#555;">May your day be as bright as your smile!</p>
-            <div class="party-icon">🎉</div>
-        </div>
-
-        <div class="gallery">
-            <h2>Special Memories ✨</h2>
-            <div class="photo-grid">
-                <img src="https://via.placeholder.com/400x500?text=Photo+1" alt="Memory 1">
-                <img src="https://via.placeholder.com/400x500?text=Photo+2" alt="Memory 2">
-                <img src="https://via.placeholder.com/400x500?text=Photo+3" alt="Memory 3">
-                <img src="https://via.placeholder.com/400x500?text=Photo+4" alt="Memory 4">
-                <img src="https://via.placeholder.com/400x500?text=Photo+5" alt="Memory 5">
-                <img src="https://via.placeholder.com/400x500?text=Photo+6" alt="Memory 6">
+    <div id="loading-screen">
+        <div class="loader-content">
+            <img src="asset/kitty-removebg-preview.png" alt="Loading icon" class="loading-icon">
+            <p class="loading-text">Loading something special...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
-            
-            <button class="btn-open" onclick="openMsg()">Open Special Message ✉️</button>
+            <button id="start-btn" onclick="startExperience()">
+            ✨ Start Surprise ✨
+        </button>
         </div>
     </div>
+    <audio id="bgMusic" loop>
+        <source src="perfect song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-    <div id="popup">
-        <div id="typing-box" class="typing"></div>
-        <p style="margin-top:20px; font-style:italic;">— From your neighbor 🏠</p>
-        <textarea id="reply" placeholder="Write a reply to send on Telegram..." style="width:100%; height:80px; margin-top:10px; border-radius:10px; padding:10px; border:1px solid #ddd;"></textarea>
-        <button onclick="send()" style="background:#0088cc; width:100%; margin-top:15px; border-radius:10px; padding:12px; color:white; border:none; cursor:pointer;">Send to Telegram</button>
-    </div>
+    <section class="header-section">
+        <div class="polaroid-frame">
+            <img src="asset/main.jpg" class="floating-heart">
+        </div>
+        <div id="entry-overlay">
+</div>
+        <div class="heart-container left" id="hearts-left">
+            <img src="asset/images.jpg" class="heart-img">
+        </div>
+        <h1 id="typewriter"></h1>
+        <div class="heart-container right" id="hearts-right">
+            <img src="asset/images.jpg" class="heart-img">
+        </div>
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #d63384;">
+        Where it all began...
+        </h2>
+        <p style="font-size: 1.5rem; color: #555;">June 18, 2024 🗓️</p>
+        <p>Today is all about celebrating you and the joy you bring to my life.</p>
+        <button onclick="scrollToMemories()">See Our Memories</button>
+    </section>
 
-    <script>
-        // Start Loading
-        window.onload = () => {
-            document.getElementById('bar').style.width = '100%';
-            setTimeout(() => {
-                document.getElementById('loader').style.top = '-100vh';
-                document.getElementById('content').style.display = 'block';
-            }, 3200);
-        };
+    <section id="memories" class="gallery-section">
+        <h2>Our Beautiful Memories</h2>
+        <div class="grid">
+            <div class="photo-card"><img src="asset/download.jpg" alt="Memory 1"></div>
+            <div class="photo-card"><img src="asset/images.jpg" alt="Memory 2"></div>
+            <div class="photo-card"><img src="asset/main.jpg" alt="Memory 3"></div>
+            <div class="photo-card"><img src="asset/samp1.jpg" alt="Memory 4"></div>
+            <div class="photo-card"><img src="asset/images.jpg" alt="Memory 5"></div>
+            <div class="photo-card"><img src="asset/main.jpg" alt="Memory 6"></div>
+            <div class="photo-card"><img src="asset/samp1.jpg" alt="Memory 6"></div>
+            <div class="photo-card"><img src="asset/download.jpg" alt="Memory 6"></div>
+        </div>
+        <section id="video-memories" class="gallery-section">
+            <h2>Moments in Motion 🎬</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-card">
+                    <video autoplay loop muted playsinline class="continuous-video">
+                        <source src="asset/spidey.mp4" type="video/mp4">
+                    </video>
+                </div>
+                </div>
+        </section>
+    </section>
 
-        // Typing Message
-        const msg = "Hey Mansi,\n1st of all Happy Birthday! 🎂\nYou are an amazing neighbor and a wonderful soul. I hope this year brings you infinite success and happiness. Keep shining! ✨";
-        let idx = 0;
+    <section class="letter-section">
+        <button class="letter-btn" onclick="openLetter()">💌 Open My Letter</button>
 
-        function openMsg() {
-            document.getElementById('popup').style.display = 'block';
-            type();
-        }
+        <div class="letter-container" id="letterContainer">
+            <div class="video-wrapper" id="videoWrapper">
+                <video id="letterVideo" playsinline>
+                    <source src="asset/spidey.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
 
-        function type() {
-            if (idx < msg.length) {
-                document.getElementById('typing-box').innerHTML += msg.charAt(idx);
-                idx++;
-                setTimeout(type, 50);
-            }
-        }
+            <div class="letter-envelope" id="letter">
+                <div class="letter-paper">
+                    <h3>My Love ❤️</h3>
+                    <p>
+                        Happy Birthday, Baby 💕<br>
+                        From the moment you came into my life, everything became brighter.
+                        Your smile, your kindness, and your love mean the world to me.
+                        <br><br>
+                        Yours forever 💖
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Telegram Send
-        function send() {
-            const token = "8313146819:AAHW8hG85mxoRr1lR5uVwd__x5GasxBCuqk";
-            const chat = "7893857792";
-            const userReply = document.getElementById('reply').value;
-            const text = `🎉 Mansi's Birthday Response:\n\n"${userReply}"`;
+    <section class="message-section">
+        <div class="message-box">
+            <h3>A Special Message for You</h3>
+            <p>June 18, 2024 se lekar aaj tak, har pal tumhare saath ek khoobsurat sapna lagta hai. Wo hamari dinner dates aur saath mein bitaye har lamhe mere liye sabse khaas hain. 🥂✨</p>
+            <div class="hearts">❤️❤️❤️</div>
+        </div>
+    </section>
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`)
-            .then(() => {
-                alert("Message Sent! Happy Birthday!");
-                document.getElementById('popup').style.display = 'none';
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
